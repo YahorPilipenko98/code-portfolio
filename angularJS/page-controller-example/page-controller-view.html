@@ -1,0 +1,15 @@
+<div class="mobile-simulation--watch" mp-loading-block="controller.loading">
+    <div ng-if="controller.sessionId">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="float-left">Simulation ID: {{controller.sessionId}}</h4>&nbsp;
+                <button type="button" ng-if="controller.isCancelable()" class="btn btn-danger" ng-click="controller.cancel()">
+                    <mp-inline-confirm>Cancel</mp-inline-confirm>
+                </button>
+            </div>
+        </div>
+        <pre class="mobile-simulation--watch--log" scroll-glue><div ng-repeat="message in controller.messages"
+                                                                    class="mobile-simulation--watch--log--message"><span
+            class="badge badge-secondary mobile-simulation--watch--log--timespan">{{message.datetime | date : 'M/d/yy h:mm:ss.sss a'}}</span><span>{{message.message}}</span></div></pre>
+    </div>
+</div>

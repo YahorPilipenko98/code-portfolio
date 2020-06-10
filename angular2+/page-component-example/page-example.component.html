@@ -1,0 +1,63 @@
+<form (ngSubmit)="submitForm(form)" #form="ngForm" *ngIf="isShowForm" [ngClass]="{'submitted': form.submitted}">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-3">
+        <label class="required-field">Name</label>
+        <input #name="ngModel" [(ngModel)]="editedPartner.name" name="name" class="form-control form-control-xs"  placeholder="Name" required>
+        <p *ngIf="name.invalid && (name.touched || form.submitted)">Enter correct name</p>
+      </div>
+
+      <div class="col-lg-3">
+        <label class="required-field">Email</label>
+        <input #email="ngModel" [(ngModel)]="editedPartner.email" name="email" class="form-control form-control-xs"  placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+        <p *ngIf="email.invalid && (email.touched || form.submitted)">Enter correct email</p>
+      </div>
+
+      <div class="col-lg-2">
+        <label>Choose Admin rights</label>
+        <div class="custom-control custom-checkbox">
+          <input [(ngModel)]="editedPartner.admin" type="checkbox" class="custom-control-input" id="defaultChecked2" name="Super Admin">
+          <label class="custom-control-label" for="defaultChecked2">Super Admin</label>
+        </div>
+      </div>
+
+      <div class="col-lg-2">
+        <label>Roles</label>
+        <div class="">
+          <nb-select class="selectpicker btn-block" multiple placeholder="Roles" [(selected)]="editedPartner.roles">
+            <nb-option  *ngFor="let role of roles" [value]="role.id">{{role.name}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+      <div class="col-lg-2">
+        <label>Cost</label>
+        <input #cost="ngModel" [(ngModel)]="editedPartner.cost" name="cost" class="form-control form-control-xs"  placeholder="Cost" pattern="^[0-9]*[.,]?\d{1,2}$">
+        <p *ngIf="cost.invalid && (cost.touched || form.submitted)">Enter the correct cost Example 499,99</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center mt-5 mb-3">
+      <div class="col text-center">
+        <button type="submit" class="mb-3 mr-3" status="success" [disabled]="isLoading" nbButton [nbSpinner]="isLoading">Save</button>
+        <button type="button" class="mb-3 ml-3" status="danger" nbButton (click)="closeForm()">Canсel</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<nb-card [ngxAccessResource]="[ResourceType.Partners]">
+  <nb-card-header>
+    Partners
+  </nb-card-header>
+
+  <nb-card-body *ngIf="settings">
+    <ng2-smart-table [settings]="settings" [source]="dataDB" (delete)="onDelete($event)" (edit)="openForm($event)" (create)="openForm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+

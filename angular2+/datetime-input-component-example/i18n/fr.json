@@ -1,0 +1,36 @@
+{
+    "datepicker": {
+        "placeholder-date": "Choisissez la date",
+        "placeholder-date-time": "Choisissez la date et l'heure",
+        "choose-time": "CHOISISSEZ LE TEMPS",
+        "ok-btn": "OK",
+        "clear-btn": "Сlaire",
+        "weekdays": {
+            "monday": "L",
+            "tuesday": "M",
+            "wednesday": "M",
+            "thursday": "J",
+            "friday": "V",
+            "saturday": "S",
+            "sunday": "D"
+        },
+        "months": {
+            "january": "Janvier",
+            "february": "Février",
+            "march": "Mars",
+            "april": "Avril",
+            "may": "Mai",
+            "june": "Juin",
+            "july": "Juillet",
+            "august": "Août",
+            "september": "Septembre",
+            "october": "Octobre",
+            "november": "Novembre",
+            "december": "Décembre"
+        },
+        "periods": {
+            "am": "AM",
+            "pm": "PM"
+        }
+    }
+}

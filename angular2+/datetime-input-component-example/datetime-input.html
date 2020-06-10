@@ -1,0 +1,54 @@
+<input class="invisible" ngbDatepicker #d="ngbDatepicker" [firstDayOfWeek]="7" autoClose="outside" navigation="arrows"
+       outsideDays="hidden" [footerTemplate]="showTimeInput && footerTemplate" [dayTemplate]="dayTemplate"
+       [placement]="placement" [maxDate]="maxDate" [minDate]="minDate"
+       [ngModel]="date" (ngModelChange)="onDateChange($event, d)">
+<input class="form-control"
+       placeholder="{{placeholder || (showTimeInput ? 'datepicker.placeholder-date-time' : 'datepicker.placeholder-date') | translate}}"
+       readonly [disabled]="disabled"
+       (click)="!disabled && openPicker(d)"
+       [ngModel]="inputValue ? ((inputValue|date:getDateFormat()) + (showTimezones && showTimeInput ? inputTimezone : '')) : ''">
+<ng-template #footerTemplate>
+    <div class="datetime-footer">
+        <label class="datetime-footer--title">{{"datepicker.choose-time"|translate}}</label>
+        <div class="datetime-footer--time">
+            <div class="time-input">
+                <input type="text" [ngModel]="padTime(time.hours)" (input)="onHoursChange($event)">
+                <span class="time-input--arrow up" (click)="increaseHours()"></span>
+                <span class="time-input--arrow down" (click)="decreaseHours()"></span>
+            </div>
+            <span class="delimiter">:</span>
+            <div class="time-input">
+                <input type="text" [ngModel]="padTime(time.minutes)" (input)="onMinutesChange($event)">
+                <span class="time-input--arrow up" (click)="increaseMinutes()"></span>
+                <span class="time-input--arrow down" (click)="decreaseMinutes()"></span>
+            </div>
+            <div class="time-input">
+                <select [(ngModel)]="period">
+                    <option *ngFor="let p of periodsList" [value]="p.value">{{p.label|translate}}</option>
+                </select>
+                <span class="time-input--arrow select down"></span>
+            </div>
+            <div class="time-input" *ngIf="showTimezones">
+                <select [(ngModel)]="timezone" class="timezones">
+                    <option *ngFor="let tz of timezonesList" [value]="tz.abbreviation" [title]="tz.title">{{tz.abbreviation}}</option>
+                </select>
+                <span class="time-input--arrow select down"></span>
+            </div>
+            <div class="submit-btn" [ngClass]="{'with-timezones': showTimezones}"
+                 (click)="submit(d)">{{"datepicker.ok-btn"|translate}}</div>
+        </div>
+    </div>
+    <div class="datetime-clear" (click)="clear(d)">{{"datepicker.clear-btn"|translate}}</div>
+</ng-template>
+<ng-template #dayTemplate let-date let-focused="focused" let-disabled="disabled">
+    <div class="custom-day"
+         [class.focused]="focused"
+         [class]="getRangeClass(date)"
+         [class.selected]="isSelected(date)"
+         [class.disabled]="disabled">
+        <ng-container *ngIf="!isSelected(date)">
+            {{date.day}}
+        </ng-container>
+        <div class="selected" *ngIf="isSelected(date)">{{date.day}}</div>
+    </div>
+</ng-template>
